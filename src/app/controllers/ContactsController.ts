@@ -27,15 +27,27 @@ class ContactsController implements IControllers {
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const contacts = await ContactsRepositories.findAll();
 
-    return h.response(ContactsRepositories.findAll()).code(200);
+    return h.response(contacts).code(200);
   }
 
-  show(
+  async show(
     request: Request<ReqRefDefaults>,
     h: ResponseToolkit<ReqRefDefaults>,
-    err?: Error | undefined,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    throw new Error('Method not implemented.');
+    const { id } = request.params;
+
+    const contact = await ContactsRepositories.findById(id);
+
+    if (!contact) {
+      return h
+        .response({
+          error: 'Contato não encontrado',
+        })
+        .code(404);
+    }
+
+    return contact;
   }
 
   store(
