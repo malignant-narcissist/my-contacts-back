@@ -9,9 +9,9 @@ type Contact<
   [key in Key]: S;
 };
 
-const contacts = new Set<Contact>();
+const contacts = new Map<string, Contact>();
 
-const contact: Contact = {
+const contactOne: Contact = {
   id: monotonicFactory()(),
   name: 'Josh Shadle',
   categoryId: monotonicFactory()(),
@@ -19,6 +19,6 @@ const contact: Contact = {
   phone: '(81) 98890-9310',
 };
 
-contacts.add(contact);
+contacts.set(contactOne.id, contactOne);
 
 export { contacts, Contact };
