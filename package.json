@@ -11,7 +11,8 @@
   "author": "Rodrigo Walace",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "^21.3.2"
+    "@hapi/hapi": "^21.3.2",
+    "ulid": "^2.3.0"
   },
   "engines": {
     "node": ">= 18.0.0"
