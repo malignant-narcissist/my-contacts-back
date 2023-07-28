@@ -1,7 +1,7 @@
 import { Contact, contacts } from '../datasource';
 
 class ContactsRepository {
-  private contacts: Set<Contact>;
+  private contacts: Map<string, Contact>;
 
   constructor() {
     this.contacts = contacts;
@@ -12,9 +12,7 @@ class ContactsRepository {
   }
 
   async findById(id: string) {
-    const contact = Array.from(this.contacts).find((i) => {
-      return i.id === id;
-    });
+    const contact = contacts.get(id);
 
     return contact;
   }
