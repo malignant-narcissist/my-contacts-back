@@ -21,9 +21,9 @@ type IControllers<
 
 class ContactsController implements IControllers {
   async index(
-    request: Request<ReqRefDefaults>,
+    _request: Request<ReqRefDefaults>,
     h: ResponseToolkit<ReqRefDefaults>,
-    err?: Error | undefined,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const contacts = await ContactsRepositories.findAll();
 
@@ -51,25 +51,25 @@ class ContactsController implements IControllers {
   }
 
   store(
-    request: Request<ReqRefDefaults>,
-    h: ResponseToolkit<ReqRefDefaults>,
-    err?: Error | undefined,
+    _request: Request<ReqRefDefaults>,
+    _h: ResponseToolkit<ReqRefDefaults>,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     throw new Error('Method not implemented.');
   }
 
   update(
-    request: Request<ReqRefDefaults>,
-    h: ResponseToolkit<ReqRefDefaults>,
-    err?: Error | undefined,
+    _request: Request<ReqRefDefaults>,
+    _h: ResponseToolkit<ReqRefDefaults>,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     throw new Error('Method not implemented.');
   }
 
   delete(
-    request: Request<ReqRefDefaults>,
-    h: ResponseToolkit<ReqRefDefaults>,
-    err?: Error | undefined,
+    _request: Request<ReqRefDefaults>,
+    _h: ResponseToolkit<ReqRefDefaults>,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     throw new Error('Method not implemented.');
   }
