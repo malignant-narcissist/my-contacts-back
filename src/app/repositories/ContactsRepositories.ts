@@ -16,6 +16,14 @@ class ContactsRepository {
 
     return contact;
   }
+
+  async removeById(id: string): Promise<Contact | undefined> {
+    const contact = this.contacts.get(id);
+
+    this.contacts.delete(id);
+
+    return contact;
+  }
 }
 
 const contactsRepository = new ContactsRepository();

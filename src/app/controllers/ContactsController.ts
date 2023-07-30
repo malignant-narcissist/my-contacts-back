@@ -66,12 +66,16 @@ class ContactsController implements IControllers {
     throw new Error('Method not implemented.');
   }
 
-  delete(
-    _request: Request<ReqRefDefaults>,
-    _h: ResponseToolkit<ReqRefDefaults>,
+  async delete(
+    request: Request<ReqRefDefaults>,
+    h: ResponseToolkit<ReqRefDefaults>,
     _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    throw new Error('Method not implemented.');
+    const { id } = request.params;
+
+    const contact = await ContactsRepositories.removeById(id);
+
+    return contact ? h.response(contact).code(200) : h.response().code(204);
   }
 }
 
