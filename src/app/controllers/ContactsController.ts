@@ -75,7 +75,13 @@ class ContactsController implements IControllers {
 
     const contact = await ContactsRepositories.removeById(id);
 
-    return contact ? h.response(contact).code(200) : h.response().code(204);
+    return contact
+      ? h.response(contact).code(200)
+      : h
+          .response({
+            error: 'Contato não encontrado',
+          })
+          .code(404);
   }
 }
 
