@@ -56,7 +56,7 @@ class ContactsController implements IControllers {
     h: ResponseToolkit<ReqRefDefaults>,
     _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    const { data } = request.params;
+    const data = request.payload;
 
     const isDataValid = (data: unknown): data is Omit<Contact, 'id'> => {
       if (typeof data === 'object' && data !== null) {
