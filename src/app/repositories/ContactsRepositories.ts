@@ -18,6 +18,14 @@ class ContactsRepository {
     return contact;
   }
 
+  async findByEmail(email: string) {
+    const contacts = Array.from(this.contacts.values());
+
+    const contact = contacts.find((c) => c.email === email);
+
+    return contact;
+  }
+
   async removeById(id: string): Promise<Contact | undefined> {
     const contact = this.contacts.get(id);
 
