@@ -1,3 +1,4 @@
+import { Contact } from '../datasource';
 import ContactsRepositories from '../repositories/ContactsRepositories';
 import {
   Lifecycle,
@@ -50,12 +51,36 @@ class ContactsController implements IControllers {
     return contact;
   }
 
-  store(
-    _request: Request<ReqRefDefaults>,
-    _h: ResponseToolkit<ReqRefDefaults>,
+  async store(
+    request: Request<ReqRefDefaults>,
+    h: ResponseToolkit<ReqRefDefaults>,
     _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    throw new Error('Method not implemented.');
+    const { data } = request.params;
+
+    const isDataValid = (data: unknown): data is Omit<Contact, 'id'> => {
+      if (typeof data === 'object' && data !== null) {
+        const hasName =
+          'name' in data && typeof data.name === 'string' && !!data.name;
+
+        return hasName;
+      }
+
+      return false;
+    };
+
+    if (!isDataValid(data)) {
+      return h
+        .response({
+          error:
+            'Dados para criação do contato estão inválidos ou insuficientes',
+        })
+        .code(401);
+    }
+
+    const contact = await ContactsRepositories.createContact(data);
+
+    return h.response(contact).code(200);
   }
 
   update(
