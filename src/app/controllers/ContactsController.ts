@@ -78,6 +78,16 @@ class ContactsController implements IControllers {
         .code(401);
     }
 
+    const contactWithEmail = await ContactsRepositories.findByEmail(data.email);
+
+    if (contactWithEmail) {
+      return h
+        .response({
+          error: 'Um contato com o e-mail fornecido já está cadastrado',
+        })
+        .code(401);
+    }
+
     const contact = await ContactsRepositories.createContact(data);
 
     return h.response(contact).code(200);
