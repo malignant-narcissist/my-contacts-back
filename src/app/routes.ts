@@ -17,6 +17,11 @@ const routes: ServerRoute[] = [
     path: '/contacts/{id}',
     handler: Controller.delete,
   },
+  {
+    method: 'POST',
+    handler: Controller.store,
+    path: '/contacts',
+  },
 ];
 
 export { routes };
