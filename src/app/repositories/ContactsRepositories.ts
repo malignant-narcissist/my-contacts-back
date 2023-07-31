@@ -1,4 +1,5 @@
 import { Contact, contacts } from '../datasource';
+import { monotonicFactory } from 'ulid';
 
 class ContactsRepository {
   private contacts: Map<string, Contact>;
@@ -21,6 +22,17 @@ class ContactsRepository {
     const contact = this.contacts.get(id);
 
     this.contacts.delete(id);
+
+    return contact;
+  }
+
+  async createContact(data: Omit<Contact, 'id'>): Promise<Contact> {
+    const contact: Contact = {
+      ...data,
+      id: monotonicFactory()(),
+    };
+
+    this.contacts.set(contact.id, contact);
 
     return contact;
   }
