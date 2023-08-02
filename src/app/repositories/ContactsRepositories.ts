@@ -44,6 +44,25 @@ class ContactsRepository {
 
     return contact;
   }
+
+  async update(
+    data: Partial<Omit<Contact, 'id'>> & Pick<Contact, 'id'>,
+  ): Promise<Contact | undefined> {
+    const contact = this.contacts.get(data.id);
+
+    if (contact) {
+      const updatedContact = {
+        ...contact,
+        ...data,
+      };
+
+      this.contacts.set(data.id, updatedContact);
+
+      return updatedContact;
+    }
+
+    return contact;
+  }
 }
 
 const contactsRepository = new ContactsRepository();
