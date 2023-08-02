@@ -22,6 +22,11 @@ const routes: ServerRoute[] = [
     handler: Controller.store,
     path: '/contacts',
   },
+  {
+    method: 'PATCH',
+    handler: Controller.update,
+    path: '/contacts',
+  },
 ];
 
 export { routes };
