@@ -93,12 +93,36 @@ class ContactsController implements IControllers {
     return h.response(contact).code(200);
   }
 
-  update(
-    _request: Request<ReqRefDefaults>,
-    _h: ResponseToolkit<ReqRefDefaults>,
-    _err?: Error | undefined,
+  async update(
+    request: Request<ReqRefDefaults>,
+    h: ResponseToolkit<ReqRefDefaults>,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    throw new Error('Method not implemented.');
+    const data = request.payload;
+
+    const isDataValid = (
+      data: unknown,
+    ): data is Partial<Omit<Contact, 'id'>> & Pick<Contact, 'id'> => {
+      return (
+        typeof data === 'object' &&
+        data !== null &&
+        'id' in data &&
+        typeof data.id === 'string' &&
+        !!data.id
+      );
+    };
+
+    if (!isDataValid(data)) {
+      return h
+        .response({
+          error:
+            'Dados para criação do contato estão inválidos ou insuficientes',
+        })
+        .code(401);
+    }
+
+    const updatedContact = await ContactsRepositories.update(data);
+
+    return h.response(updatedContact).code(200);
   }
 
   async delete(
