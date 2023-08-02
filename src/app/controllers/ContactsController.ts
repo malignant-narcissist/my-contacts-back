@@ -120,6 +120,22 @@ class ContactsController implements IControllers {
         .code(401);
     }
 
+    if (data.email) {
+      const hasContactWithEmail = await ContactsRepositories.findByEmail(
+        data.email,
+      );
+
+      const hasContactWithId = await ContactsRepositories.findById(data.id);
+
+      if (hasContactWithEmail?.id !== hasContactWithId?.id) {
+        return h
+          .response({
+            error: 'Um contato com este email já existe',
+          })
+          .code(401);
+      }
+    }
+
     const updatedContact = await ContactsRepositories.update(data);
 
     return h.response(updatedContact).code(200);
