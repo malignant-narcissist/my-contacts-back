@@ -18,6 +18,13 @@
     "@mikro-orm/postgresql": "^5.7.14",
     "ulid": "^2.3.0"
   },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./src/database/mikro-orm.config.ts",
+      "./dist/database/mikro-orm.config.js"
+    ]
+  },
   "engines": {
     "node": ">= 18.0.0"
   },
