@@ -12,6 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
+    "@mikro-orm/cli": "^5.7.14",
+    "@mikro-orm/core": "^5.7.14",
+    "@mikro-orm/migrations": "^5.7.14",
+    "@mikro-orm/postgresql": "^5.7.14",
     "ulid": "^2.3.0"
   },
   "engines": {
