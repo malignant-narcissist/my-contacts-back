@@ -9,7 +9,7 @@ interface ICustomBaseEntity {
 
 abstract class BaseEntity implements ICustomBaseEntity {
   @PrimaryKey({
-    type: 'uuid',
+    type: 'varchar',
   })
   id: string = monotonicFactory()();
 
