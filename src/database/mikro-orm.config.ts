@@ -12,13 +12,9 @@ const config = defineConfig<PostgreSqlDriver>({
   user: process.env.POSTGRES_USER,
   migrations: {
     fileName(timestamp, name) {
-      if (name) {
-        return `${name}Migration${timestamp}`
-      }
-
-      return `Migration${timestamp}`
+      return `Migration_${timestamp}${name ? `_${name}` : ''}`;
     },
-  }
+  },
 });
 
 export default config;
