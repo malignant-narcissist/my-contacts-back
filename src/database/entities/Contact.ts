@@ -5,7 +5,7 @@ import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 @Entity({
   tableName: 'contacts',
 })
-class Contacts extends BaseEntity {
+class Contact extends BaseEntity {
   @Property()
   name!: string;
 
@@ -25,4 +25,4 @@ class Contacts extends BaseEntity {
   category?: Category;
 }
 
-export { Contacts };
+export { Contact };

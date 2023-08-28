@@ -1,5 +1,5 @@
 import { BaseEntity } from '../CustomBaseEntity';
-import { Contacts } from './Contact';
+import { Contact } from './Contact';
 import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
 
 @Entity()
@@ -8,10 +8,10 @@ class Category extends BaseEntity {
   name!: string;
 
   @OneToMany(
-    () => Contacts,
+    () => Contact,
     ({ category }) => category,
   )
-  contacts = new Collection<Contacts>(this);
+  contacts = new Collection<Contact>(this);
 }
 
 export { Category };
