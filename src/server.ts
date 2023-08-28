@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { routes } from './app/routes';
 import Hapi from '@hapi/hapi';
 
