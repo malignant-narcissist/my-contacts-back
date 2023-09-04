@@ -1,6 +1,6 @@
-import 'dotenv/config';
 import { defineConfig } from '@mikro-orm/core';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+import 'dotenv/config';
 
 const config = defineConfig<PostgreSqlDriver>({
   dbName: process.env.POSTGRES_DB,
