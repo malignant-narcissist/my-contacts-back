@@ -1,4 +1,4 @@
-import { Contact, contacts } from '../datasource';
+import { Contact, contacts } from '../datasource.ts';
 import { monotonicFactory } from 'ulid';
 
 class ContactsRepository {

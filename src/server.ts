@@ -1,5 +1,4 @@
-import 'dotenv/config';
-import { routes } from './app/routes';
+import { routes } from './app/routes.ts';
 import Hapi from '@hapi/hapi';
 
 const serverInit = async () => {

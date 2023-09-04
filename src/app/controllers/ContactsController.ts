@@ -1,5 +1,4 @@
-import { Contact } from '../datasource';
-import ContactsRepositories from '../repositories/ContactsRepositories';
+import { Contact } from '../datasource.ts';
 import {
   Lifecycle,
   ReqRefDefaults,

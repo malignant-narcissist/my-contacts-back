@@ -1,5 +1,5 @@
-import { BaseEntity } from '../CustomBaseEntity';
-import { Contact } from './Contact';
+import { BaseEntity } from '../CustomBaseEntity.ts';
+import { Contact } from './Contact.ts';
 import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
 
 @Entity()

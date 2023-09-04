@@ -1,5 +1,5 @@
-import { BaseEntity } from '../CustomBaseEntity';
-import { Category } from './Category';
+import { BaseEntity } from '../CustomBaseEntity.ts';
+import { Category } from './Category.ts';
 import { Entity, ManyToOne, Property } from '@mikro-orm/core';
 
 @Entity({
