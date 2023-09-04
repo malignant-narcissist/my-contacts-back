@@ -126,7 +126,11 @@ class ContactsController implements IControllers {
 
       const hasContactWithId = await ContactsRepositories.findById(data.id);
 
-      if (hasContactWithEmail?.id !== hasContactWithId?.id) {
+      if (
+        hasContactWithEmail &&
+        hasContactWithId &&
+        hasContactWithEmail.id !== hasContactWithId.id
+      ) {
         return h
           .response({
             error: 'Um contato com este email já existe',
