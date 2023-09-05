@@ -57,7 +57,9 @@ class ContactsController implements IControllers {
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const data = request.payload;
 
-    const isDataValid = (data: unknown): data is Omit<Contact, 'id'> => {
+    const isDataValid = (
+      data: unknown,
+    ): data is Omit<Contact, 'id' | 'category'> & { categoryId?: string } => {
       if (typeof data === 'object' && data !== null) {
         const hasName =
           'name' in data && typeof data.name === 'string' && !!data.name;
