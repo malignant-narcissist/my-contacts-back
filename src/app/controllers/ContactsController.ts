@@ -90,9 +90,25 @@ class ContactsController implements IControllers {
         .code(401);
     }
 
-    const contact = await ContactsRepositories.createContact(data);
+    try {
+      const contact = await ContactsRepositories.createContact(data);
 
-    return h.response(contact).code(200);
+      return h.response(contact).code(200);
+    } catch (error) {
+      if (error instanceof Error) {
+        return h
+          .response({
+            error: error.message,
+          })
+          .code(400);
+      }
+
+      return h
+        .response({
+          error: 'Houve um erro na criação do contato',
+        })
+        .code(400);
+    }
   }
 
   async update(
