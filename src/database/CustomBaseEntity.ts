@@ -14,10 +14,10 @@ abstract class BaseEntity implements ICustomBaseEntity {
   id: string = monotonicFactory()();
 
   @Property()
-  createdAt!: Date;
+  createdAt: Date = new Date();
 
   @Property()
-  updatetAt!: Date;
+  updatetAt: Date = new Date();
 }
 
 export { ICustomBaseEntity, BaseEntity };
