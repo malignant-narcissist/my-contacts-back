@@ -1,6 +1,6 @@
+import { Entity, ManyToOne, Property, Rel } from '@mikro-orm/core';
 import { BaseEntity } from '../CustomBaseEntity.ts';
 import { Category } from './Category.ts';
-import { Entity, ManyToOne, Property, Rel } from '@mikro-orm/core';
 
 @Entity({
   tableName: 'contacts',

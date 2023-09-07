@@ -1,5 +1,5 @@
-import Controller from './controllers/ContactsController.ts';
 import { ServerRoute } from '@hapi/hapi';
+import Controller from './controllers/ContactsController.ts';
 
 const routes: ServerRoute[] = [
   {

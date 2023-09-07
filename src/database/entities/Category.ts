@@ -1,6 +1,6 @@
+import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
 import { BaseEntity } from '../CustomBaseEntity.ts';
 import { Contact } from './Contact.ts';
-import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
 
 @Entity()
 class Category extends BaseEntity {

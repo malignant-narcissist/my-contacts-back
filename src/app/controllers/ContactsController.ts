@@ -1,11 +1,11 @@
-import { Contact } from '../../database/entities/Contact.ts';
-import ContactsRepositories from '../repositories/ContactsRepositories.ts';
 import {
   Lifecycle,
   ReqRefDefaults,
   Request,
   ResponseToolkit,
 } from '@hapi/hapi';
+import { Contact } from '../../database/entities/Contact.ts';
+import ContactsRepositories from '../repositories/ContactsRepositories.ts';
 
 type ServerRouteHandler = Lifecycle.Method;
 
