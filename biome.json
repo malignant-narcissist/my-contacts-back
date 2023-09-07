@@ -1,4 +1,5 @@
 {
+  "$schema": "https://biomejs.dev/schemas/1.1.0/schema.json",
   "organizeImports": {
     "enabled": true
   },
@@ -9,7 +10,8 @@
         "recommended": true
       },
       "complexity": {
-        "recommended": true
+        "recommended": true,
+        "useLiteralKeys": "warn"
       },
       "correctness": {
         "recommended": true
@@ -18,13 +20,9 @@
         "recommended": true
       },
       "nursery": {
-        "useIsNan": "warn",
-        "noConsoleLog": "warn",
+        "noGlobalIsNan": "warn",
         "useLiteralEnumMembers": "error",
         "useExhaustiveDependencies": "warn",
-        "noDuplicateJsxProps": "error",
-        "useCamelCase": "warn",
-        "useLiteralKeys": "warn",
         "useGroupedTypeImport": "warn",
         "noConstantCondition": "warn",
         "noConfusingArrow": "warn",
@@ -37,7 +35,8 @@
         "useExponentiationOperator": "warn"
       },
       "suspicious": {
-        "recommended": true
+        "recommended": true,
+        "noConsoleLog": "warn"
       },
       "security": {
         "recommended": true
@@ -55,6 +54,9 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "single"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   }
 }
