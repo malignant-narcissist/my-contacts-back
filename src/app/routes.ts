@@ -1,30 +1,33 @@
 import { ServerRoute } from '@hapi/hapi';
-import Controller from './controllers/ContactsController.ts';
+import { Container } from 'typedi';
+import { ContactsController } from './controllers/ContactsController.ts';
+
+const contactsController = Container.get(ContactsController);
 
 const routes: ServerRoute[] = [
   {
     method: 'GET',
     path: '/contacts',
-    handler: Controller.index,
+    handler: (...args) => contactsController.index(...args),
   },
   {
     method: 'GET',
     path: '/contacts/{id}',
-    handler: Controller.show,
+    handler: (...args) => contactsController.show(...args),
   },
   {
     method: 'DELETE',
     path: '/contacts/{id}',
-    handler: Controller.delete,
+    handler: (...args) => contactsController.delete(...args),
   },
   {
     method: 'POST',
-    handler: Controller.store,
+    handler: (...args) => contactsController.store(...args),
     path: '/contacts',
   },
   {
     method: 'PATCH',
-    handler: Controller.update,
+    handler: (...args) => contactsController.update(...args),
     path: '/contacts',
   },
 ];
