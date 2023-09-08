@@ -4,8 +4,9 @@ import {
   Request,
   ResponseToolkit,
 } from '@hapi/hapi';
+import { Service } from 'typedi';
 import { Contact } from '../../database/entities/Contact.ts';
-import ContactsRepositories from '../repositories/ContactsRepositories.ts';
+import { ContactsRepository } from '../repositories/ContactsRepositories.ts';
 
 type ServerRouteHandler = Lifecycle.Method;
 
@@ -20,13 +21,16 @@ type IControllers<
   delete(...args: Params): Promise<R>;
 };
 
+@Service()
 class ContactsController implements IControllers {
-  async index(
+  constructor(public contactsRepo: ContactsRepository) {}
+
+  public async index(
     _request: Request<ReqRefDefaults>,
     h: ResponseToolkit<ReqRefDefaults>,
     _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
-    const contacts = await ContactsRepositories.findAll();
+    const contacts = await this.contactsRepo.findAll();
 
     return h.response(contacts).code(200);
   }
@@ -38,7 +42,7 @@ class ContactsController implements IControllers {
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const { id } = request.params;
 
-    const contact = await ContactsRepositories.findById(id);
+    const contact = await this.contactsRepo.findById(id);
 
     if (!contact) {
       return h
@@ -80,7 +84,7 @@ class ContactsController implements IControllers {
         .code(401);
     }
 
-    const contactWithEmail = await ContactsRepositories.findByEmail(data.email);
+    const contactWithEmail = await this.contactsRepo.findByEmail(data.email);
 
     if (contactWithEmail) {
       return h
@@ -91,7 +95,7 @@ class ContactsController implements IControllers {
     }
 
     try {
-      const contact = await ContactsRepositories.createContact(data);
+      const contact = await this.contactsRepo.createContact(data);
 
       return h.response(contact).code(200);
     } catch (error) {
@@ -114,6 +118,7 @@ class ContactsController implements IControllers {
   async update(
     request: Request<ReqRefDefaults>,
     h: ResponseToolkit<ReqRefDefaults>,
+    _err?: Error | undefined,
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const data = request.payload;
 
@@ -139,11 +144,11 @@ class ContactsController implements IControllers {
     }
 
     if (data.email) {
-      const hasContactWithEmail = await ContactsRepositories.findByEmail(
+      const hasContactWithEmail = await this.contactsRepo.findByEmail(
         data.email,
       );
 
-      const hasContactWithId = await ContactsRepositories.findById(data.id);
+      const hasContactWithId = await this.contactsRepo.findById(data.id);
 
       if (
         hasContactWithEmail &&
@@ -158,7 +163,7 @@ class ContactsController implements IControllers {
       }
     }
 
-    const updatedContact = await ContactsRepositories.update(data);
+    const updatedContact = await this.contactsRepo.update(data);
 
     return h.response(updatedContact).code(200);
   }
@@ -170,7 +175,7 @@ class ContactsController implements IControllers {
   ): Promise<Lifecycle.ReturnValue<ReqRefDefaults>> {
     const { id } = request.params;
 
-    const contact = await ContactsRepositories.removeById(id);
+    const contact = await this.contactsRepo.removeById(id);
 
     return contact
       ? h.response(contact).code(200)
@@ -182,7 +187,4 @@ class ContactsController implements IControllers {
   }
 }
 
-const controller = new ContactsController();
-
-export default controller;
 export { ContactsController };
