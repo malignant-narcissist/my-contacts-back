@@ -1,17 +1,20 @@
+import { MikroORM, UseRequestContext } from '@mikro-orm/core';
+import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+import { Inject, Service } from 'typedi';
 import { Category } from '../../database/entities/Category.ts';
 import { Contact } from '../../database/entities/Contact.ts';
-import { mainOrm } from '../../database/source.ts';
-import { EntityRepository } from '@mikro-orm/core';
+import { MIKRO_ORM_ENTITY_MANAGER_TOKEN } from '../../infra/container.ts';
 
+@Service()
 class ContactsRepository {
-  private em: EntityRepository<Contact>;
+  constructor(
+    @Inject(MIKRO_ORM_ENTITY_MANAGER_TOKEN)
+    private readonly orm: MikroORM<PostgreSqlDriver>,
+  ) {}
 
-  constructor() {
-    this.em = mainOrm.em.fork().getRepository(Contact);
-  }
-
-  async findAll() {
-    const contacts = await this.em.findAll({
+  @UseRequestContext()
+  public async findAll() {
+    const contacts = await this.orm.em.getRepository(Contact).findAll({
       fields: [
         '*',
         {
@@ -23,8 +26,9 @@ class ContactsRepository {
     return contacts;
   }
 
+  @UseRequestContext()
   async findById(id: string) {
-    const contact = await this.em.findOne(
+    const contact = await this.orm.em.getRepository(Contact).findOne(
       {
         id,
       },
@@ -41,8 +45,9 @@ class ContactsRepository {
     return contact;
   }
 
+  @UseRequestContext()
   async findByEmail(email: string) {
-    const contact = await this.em.findOne(
+    const contact = await this.orm.em.getRepository(Contact).findOne(
       {
         email,
       },
@@ -59,8 +64,9 @@ class ContactsRepository {
     return contact;
   }
 
+  @UseRequestContext()
   async removeById(id: string): Promise<Contact | undefined> {
-    const contact = await this.em.findOne(
+    const contact = await this.orm.em.getRepository(Contact).findOne(
       {
         id,
       },
@@ -74,13 +80,14 @@ class ContactsRepository {
       },
     );
 
-    await this.em.nativeDelete({
+    await this.orm.em.getRepository(Contact).nativeDelete({
       ...contact,
     });
 
     return contact ?? undefined;
   }
 
+  @UseRequestContext()
   async createContact({
     categoryId,
     ...data
@@ -91,8 +98,7 @@ class ContactsRepository {
 
     if (categoryId) {
       category =
-        (await this.em
-          .getEntityManager()
+        (await this.orm.em
           .findOne(Category, {
             id: categoryId,
           })
@@ -105,17 +111,20 @@ class ContactsRepository {
       }
     }
 
-    const contact = this.em.create({ ...data, category });
+    const contact = this.orm.em
+      .getRepository(Contact)
+      .create({ ...data, category });
 
-    await this.em.nativeInsert(contact);
+    await this.orm.em.getRepository(Contact).nativeInsert(contact);
 
     return contact;
   }
 
+  @UseRequestContext()
   async update(
     data: Partial<Omit<Contact, 'id'>> & Pick<Contact, 'id'>,
   ): Promise<Contact | undefined> {
-    const contact = await this.em.findOne(
+    const contact = await this.orm.em.getRepository(Contact).findOne(
       {
         id: data.id,
       },
@@ -138,7 +147,7 @@ class ContactsRepository {
         category: contactCategory,
       };
 
-      await this.em.upsert(updatedContact);
+      await this.orm.em.getRepository(Contact).upsert(updatedContact);
 
       return updatedContact;
     }
@@ -147,6 +156,4 @@ class ContactsRepository {
   }
 }
 
-const contactsRepository = new ContactsRepository();
-
-export default contactsRepository;
+export { ContactsRepository };
